@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>두더지 잡기</title>
+    <style>
+      .hole {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #c2b280;
+        margin: 20px;
+        display: inline-block;
+        position: relative;
+      }
+      .mole {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #654321;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+      }
+      #score {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>두더지 잡기</h1>
+    <p>10초 동안 두더지를 잡아보세요!</p>
+    <div id="gameBoard"></div>
+    <div id="score">0</div>
+    <script>
+      let score = 0;
+      const gameBoard = document.getElementById("gameBoard");
+      const holes = [];
+      for (let i = 0; i < 9; i++) {
+        const hole = document.createElement("div");
+        hole.classList.add("hole");
+        holes.push(hole);
+        gameBoard.appendChild(hole);
+        const mole = document.createElement("div");
+        mole.classList.add("mole");
+        hole.appendChild(mole);
+        mole.addEventListener("click", () => {
+          score++;
+          document.getElementById("score").innerHTML = score;
+          mole.style.display = "none";
+        });
+      }
+      function showMole() {
+        const randomIndex = Math.floor(Math.random() * 9);
+        const hole = holes[randomIndex];
+        const mole = hole.querySelector(".mole");
+        mole.style.display = "block";
+        setTimeout(() => {
+          mole.style.display = "none";
+          if (score < 10) {
+            showMole();
+          } else {
+            alert(`게임 종료! 최종 점수: ${score}`);
+          }
+        }, 1000);
+      }
+      setTimeout(showMole, 1000);
+    </script>
+  </body>
+</html>

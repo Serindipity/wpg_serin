@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>간단한 타이머</title>
+  </head>
+  <body>
+    <h1>간단한 타이머</h1>
+    <p>시간을 선택하고 시작하세요!</p>
+    <select id="timerSelect">
+      <option value="1">1 분</option>
+      <option value="2">2 분</option>
+      <option value="3">3 분</option>
+      <option value="4">4 분</option>
+      <option value="5">5 분</option>
+    </select>
+    <button onclick="startTimer()">시작</button>
+    <button onclick="stopTimer()">멈춤</button>
+    <div id="timerDisplay"></div>
+    <script>
+      let timer;
+      function startTimer() {
+        const time = document.getElementById("timerSelect").value * 60;
+        let count = time;
+        timer = setInterval(() => {
+          let minutes = Math.floor(count / 60);
+          let seconds = count % 60;
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+          document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds}`;
+          count--;
+          if (count < 0) {
+            clearInterval(timer);
+            alert("타이머 종료");
+          }
+        }, 1000);
+      }
+      function stopTimer() {
+        clearInterval(timer);
+      }
+    </script>
+  </body>
+</html>
